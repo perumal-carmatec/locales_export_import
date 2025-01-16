@@ -8,6 +8,7 @@ module LocalesExportImport
     def convert(input_file, output_path = nil, file_prefix = nil)
       @yaml = ::Hash.new
       ::CSV.foreach(::File.join(input_file), :headers => true) do |row|
+        next if row.fields.all?(&:blank?)
         puts "inspect: #{row.inspect}"
         key = row['key'].strip
         row.headers.each do |header|
